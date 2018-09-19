@@ -1,0 +1,32 @@
+.titleWrapper {
+  position: relative;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  font-size: 1.1rem;
+}
+
+.firstTitle {
+  width: 50%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  top: 20%;
+  left: 50%;
+  margin-left: -21%;
+  padding-bottom: 1%;
+  border-bottom: 0.1rem solid black;
+  transition: all 300ms ease-in-out;
+}
+
+.secondTitle {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  margin-left: -20%;
+  transition: all 300ms ease-in-out;
+}

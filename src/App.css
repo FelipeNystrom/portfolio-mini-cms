@@ -1,0 +1,12 @@
+.wrapper {
+  width: 90%;
+}
+
+.cardWrapper {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+}
