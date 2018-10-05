@@ -1,0 +1,111 @@
+@keyframes showAndDownOnLoad {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+
+  75% {
+    top: 20%;
+    opacity: 0;
+  }
+
+  100% {
+    top: 30%;
+    opacity: 1;
+  }
+}
+
+@keyframes showAndUpOnLoad {
+  0% {
+    top: 50%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    top: 50%;
+  }
+
+  100% {
+    top: 20%;
+  }
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  margin-top: 5%;
+  font-size: 1.1rem;
+}
+
+.animationWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+}
+.upper {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  text-align: center;
+  top: 20%;
+  padding-bottom: 4.5%;
+  font-size: 1.5rem;
+  animation-fill-mode: forwards;
+  animation-name: showAndUpOnLoad;
+  animation-duration: 800ms;
+  animation-timing-function: ease-in-out;
+  /* border-bottom: 0.1rem solid hsl(0, 0%, 10%, 0); */
+  /* transition: all 800ms ease-in-out; */
+}
+
+/* .showBorderBottom {
+  border-bottom: 0.2rem solid hsl(0, 0%, 10%, 1);
+} */
+
+.lower {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  opacity: 0;
+  font-size: 1.5rem;
+}
+
+.animateLower {
+  animation-name: showAndDownOnLoad;
+  animation-delay: 700ms;
+  animation-duration: 800ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+
+.imgWrapper {
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+}
+
+.profilePic {
+  margin-top: 20%;
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0.1rem 0.1rem 0.3rem hsl(0, 0%, 40%, 0.6);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 800ms ease-in-out;
+  transition-delay: 1.5s;
+}
+
+.animateProfilePic {
+  opacity: 1;
+  transform: scale(1);
+}

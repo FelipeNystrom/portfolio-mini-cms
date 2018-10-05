@@ -1,0 +1,74 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 5vh;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0.1rem 0.1rem 1rem hsl(0, 0%, 80%, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginLogout {
+  font-size: 1.2rem;
+  position: absolute;
+  top: 3vh;
+  right: 5%;
+  color: hsl(0, 0%, 10%, 0.5);
+}
+
+.loginLogout:hover {
+  color: hsl(0, 0%, 10%, 0.8);
+}
+
+.loginLogout:active {
+  color: hsl(0, 0%, 10%, 1);
+}
+
+.links {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.link {
+  width: auto;
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 2%;
+  /* border-bottom: 0.1rem solid hsla(0, 0%, 10%, 0); */
+  border-left: 0rem solid hsla(0, 0%, 10%, 0);
+  transition: border-bottom 400ms ease-in-out, border-left 200ms ease-in-out;
+}
+
+.link:hover {
+  /* border-bottom: 0.1rem solid hsla(0, 0%, 10%, 0.8); */
+  border-left: 0.5rem solid hsla(0, 0%, 10%, 0.8);
+}
+
+.userMenu {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.userMenu li {
+  margin: 0 0.5rem;
+}
+
+.hiUser {
+  margin-bottom: 0.8rem;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.hiUser span {
+  font-weight: bold;
+  font-size: 0.75rem;
+}

@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
-import styles from './TitleAnimationOnLoad.css';
+import { Redirect } from 'react-router-dom';
+import styles from './Greetings.css';
+import profileImg from '../media/profilbild-aida.jpg';
 
 class TitleAnimation extends Component {
   state = {
-    animate: false
+    animate: false,
+    redirect: false
   };
   componentDidMount() {
     setTimeout(() => {
       this.setState({ animate: true });
     }, 0);
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.animate !== this.state.animate) {
+      setTimeout(() => {
+        this.setState({ redirect: true });
+      }, 4000);
+    }
+  }
   render() {
-    const { animate } = this.state;
+    const { animate, redirect } = this.state;
     const { upper, lower } = this.props;
     return (
       <div className={styles.titleWrapper}>
@@ -32,7 +43,19 @@ class TitleAnimation extends Component {
           >
             {lower}
           </div>
+          <div className={styles.imgWrapper}>
+            <img
+              className={
+                !animate
+                  ? styles.profilePic
+                  : styles.profilePic + ' ' + styles.animateProfilePic
+              }
+              src={profileImg}
+              alt="profile-pic"
+            />
+          </div>
         </div>
+        {redirect && <Redirect to="/projects" />}
       </div>
     );
   }
