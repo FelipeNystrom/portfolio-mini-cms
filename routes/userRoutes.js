@@ -10,7 +10,6 @@ module.exports = router;
 
 router.get('/', async (req, res) => {
   const projects = await getAllProjects();
-  console.log(projects);
   res.status(200);
   if (projects.length > 0) {
     res.send({

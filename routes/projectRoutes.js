@@ -18,7 +18,7 @@ router.post('/', checkToken, async (req, res) => {
   getAllProjectsFromUser(req.user.id).then(result => {
     res.status(200);
     res.send({
-      user: req.user.username,
+      name: req.user.username,
       userId: req.user.id,
       posts: result
     });
