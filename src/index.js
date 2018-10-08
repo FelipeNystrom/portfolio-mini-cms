@@ -3,18 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from './configureStore';
 import registerServiceWorker from './registerServiceWorker';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import loadProjects from './_actions/projectAction';
+import checkUser from './_actions/userAction';
+import './_bootstrapLibrary';
 
-library.add(faSignInAlt);
-library.add(faSignOutAlt);
+const store = configureStore();
+store.dispatch(loadProjects());
+store.dispatch(checkUser());
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 registerServiceWorker();

@@ -3,6 +3,8 @@ import Footer from './Footer';
 import Card from './Card';
 import Navbar from './Navbar';
 import styles from './Projects.css';
+import { connect } from 'react-redux';
+// import * as types from '../actions/projectAction';
 
 class Projects extends Component {
   state = {
@@ -12,20 +14,7 @@ class Projects extends Component {
   };
 
   componentDidMount() {
-    const url = 'http://localhost:7000/';
-    fetch(url)
-      .then(res => res.json())
-      .then(result => {
-        console.log(result);
-        this.setState({
-          animate: true,
-          projects: result.projects
-        });
-      })
-      .catch(err => {
-        console.error('error fetching projects: ', err);
-        this.setState({ animate: true });
-      });
+    this.setState({ animate: true });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +26,8 @@ class Projects extends Component {
   }
 
   render() {
-    const { projects, animate, showCards } = this.state;
+    const { animate, showCards } = this.state;
+    const { projects } = this.props;
     const generateProjects = projects.map((project, i) => (
       <Card wait={i * 450} key={project.id}>
         {project}
@@ -67,4 +57,8 @@ class Projects extends Component {
   }
 }
 
-export default Projects;
+const mapStateToProps = (state, ownProps) => ({
+  projects: state.projects
+});
+
+export default connect(mapStateToProps)(Projects);

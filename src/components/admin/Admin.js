@@ -17,7 +17,7 @@ class Admin extends Component {
   setUser = data => {
     this.setState({
       isLoggedIn: true,
-      username: data.user,
+      username: data.name,
       userId: data.id,
       projects: data.posts
     });
