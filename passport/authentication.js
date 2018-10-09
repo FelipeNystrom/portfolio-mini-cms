@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
-const { createUser, verifyUser } = require('./queries');
+const { createUser, verifyUser, getAllProjectsFromUser } = require('./queries');
 
 const tokenForUser = user => {
   const timestamp = new Date().getTime();
@@ -9,7 +9,15 @@ const tokenForUser = user => {
 };
 
 const signin = (req, res) => {
-  res.send({ token: tokenForUser(req.user) });
+  getAllProjectsFromUser(req.user.id).then(result => {
+    res.status(200);
+    res.send({
+      name: req.user.username,
+      userId: req.user.id,
+      posts: result,
+      token: tokenForUser(req.user)
+    });
+  });
 };
 
 const signup = (req, res, next) => {
@@ -28,11 +36,11 @@ const signup = (req, res, next) => {
         .hash(password, saltRounds)
         .then(hash => {
           return createUser(username, email, hash)
-            .then(newUser => {
-              res.json({ token: tokenForUser(newUser) });
-            })
+            .then(newUser =>
+              res.json({ token: tokenForUser(newUser), user: newUser.username })
+            )
             .catch(err => {
-              res.json({ error: 'Error saving user to database.' });
+              res.error({ message: 'Error saving user to database.' });
             });
         })
         .catch(err => {
