@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import NavbarLink from './NavbarLink';
-import { Link } from 'react-router-dom';
-import styles from './Navbar.css';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Auth from '../_actions/userAction';
+import styles from './Navbar.css';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   state = {
-    loggedIn: false,
     form: false,
     admin: false
   };
@@ -20,28 +21,18 @@ export default class Navbar extends Component {
 
     if (admin) {
       this.setState({
-        admin: true,
-        loggedIn: true,
-        numberOfProjects: 0
+        admin: true
       });
-    }
-  }
-  componentDidUpdate(prevProps) {
-    const { numberOfProjects } = this.props;
-    if (prevProps.numberOfProjects !== numberOfProjects) {
-      this.setState({ numberOfProjects });
     }
   }
 
   logout = () => {
-    localStorage.removeItem('token');
-    const url = 'http://localhost:7000/logout';
-    fetch(url);
+    this.props.dispatch(Auth.logout());
   };
 
   render() {
-    const { loggedIn, form, admin } = this.state;
-    const { username, numberOfProjects, match } = this.props;
+    const { form, admin } = this.state;
+    const { username, match, loggedIn, projects } = this.props;
 
     return (
       <nav className={styles.wrapper}>
@@ -54,25 +45,36 @@ export default class Navbar extends Component {
             </li>
           )}
           {!form &&
-            !loggedIn && (
+            !admin && (
               <li>
                 <NavbarLink>About me</NavbarLink>
-                <Link to="/login">
-                  <FontAwesomeIcon
-                    className={styles.loginLogout}
-                    icon="sign-in-alt"
-                  />
-                </Link>
+
+                {!loggedIn ? (
+                  <Link to="/login">
+                    <FontAwesomeIcon
+                      className={styles.loginLogout}
+                      icon="sign-in-alt"
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/logout" onClick={this.logout}>
+                    <FontAwesomeIcon
+                      onClick={this.logout}
+                      className={styles.loginLogout}
+                      icon="sign-out-alt"
+                    />
+                  </Link>
+                )}
               </li>
             )}
 
-          {loggedIn &&
-            admin && (
+          {admin &&
+            loggedIn && (
               <Fragment>
                 {username && (
                   <div className={styles.hiUser}>
                     Hi <span>{username}</span>! You have{' '}
-                    <span>{numberOfProjects}</span> projects
+                    <span>{projects.length}</span> projects
                   </div>
                 )}
                 <ul className={styles.userMenu}>
@@ -97,3 +99,13 @@ export default class Navbar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    username: state.user.name,
+    id: state.user.userId,
+    projects: [state.user.posts]
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Navbar));

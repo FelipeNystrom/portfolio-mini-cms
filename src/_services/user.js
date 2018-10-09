@@ -14,8 +14,8 @@ export default class User {
       });
   }
 
-  static LoginOrRegister(username, password, formName, email = null) {
-    const url = `http://localhost:7000/${formName}`;
+  static Login(username, password) {
+    const url = `http://localhost:7000/login`;
     return fetch(url, {
       method: 'POST',
 
@@ -27,7 +27,6 @@ export default class User {
       mode: 'cors',
       body: JSON.stringify({
         username: username,
-        email: email,
         password: password
       })
     })
@@ -36,4 +35,29 @@ export default class User {
         throw err;
       });
   }
+
+  static Register = (username, password, email) => {
+    const url = `http://localhost:7000/register`;
+    return fetch(url, {
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      mode: 'cors',
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        email: email
+      })
+    })
+      .then(res => res.json())
+      .catch(err => {
+        throw err;
+      });
+  };
+
+  static Logout = id => {};
 }

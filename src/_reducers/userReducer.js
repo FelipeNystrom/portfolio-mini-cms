@@ -3,8 +3,12 @@ import initialState from './initialState';
 
 const userReduser = (state = initialState.user, action) => {
   switch (action.type) {
-    case types.LOAD_USER_SUCCESS:
-      return Object.assign({}, state, action.userInfo);
+    case types.USER_LOGIN_REQUEST:
+      return { loading: true };
+    case types.USER_LOGGED_IN:
+      return action.user;
+    case types.USER_LOGGED_OUT:
+      return { loggedOut: true };
     default:
       return state;
   }

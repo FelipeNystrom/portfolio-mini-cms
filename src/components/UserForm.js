@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Auth from '../_actions/userAction';
 import styles from './UserForm.css';
-import Navbar from './Navbar';
 
-export default class Login extends Component {
+class Form extends Component {
   state = {
     usernameInput: '',
     passwordInput: '',
@@ -59,8 +60,18 @@ export default class Login extends Component {
     } = this.state;
     e.preventDefault();
     if (this._isMounted) {
-      if (login) this.send(usernameInput, passwordInput);
-      if (register) this.send(usernameInput, passwordInput, emailInput);
+      if (login) {
+        this.props.dispatch(Auth.login(usernameInput, passwordInput));
+        if (this._isMounted) {
+          this.setState({ redirect: true });
+        }
+      }
+      if (register) {
+        Auth.register(usernameInput, passwordInput, emailInput);
+        if (this._isMounted) {
+          this.setState({ redirect: true });
+        }
+      }
     }
 
     // this.setState({
@@ -115,7 +126,6 @@ export default class Login extends Component {
     const { formName } = this.props;
     return (
       <Fragment>
-        <Navbar form />
         <div className={styles.wrapper}>
           <div className={styles.container}>
             <h1>{formName}</h1>
@@ -159,3 +169,10 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return { user: state.user };
+};
+
+export default withRouter(connect(mapStateToProps)(Form));

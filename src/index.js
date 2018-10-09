@@ -7,12 +7,12 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import loadProjects from './_actions/projectAction';
-import checkUser from './_actions/userAction';
+import Auth from './_actions/userAction';
 import './_bootstrapLibrary';
 
 const store = configureStore();
 store.dispatch(loadProjects());
-store.dispatch(checkUser());
+store.dispatch(Auth.checkUser());
 
 ReactDOM.render(
   <Provider store={store}>

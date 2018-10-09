@@ -8,10 +8,24 @@ class ShowProject extends Component {
     text: 'description'
   };
 
-  componentDidMount() {
-    const { params } = this.props;
+  componentDidMount() {}
 
-    console.log(params);
+  componentDidUpdate(prevProps) {
+    const { match, projects } = this.props;
+    const { id } = match.params;
+
+    if (prevProps.projects !== projects) {
+      let projectToShow = projects.filter(
+        project => project.id === parseInt(id, 0)
+      );
+
+      console.log(projectToShow);
+      this.setState({
+        title: projectToShow[0].title,
+        role: projectToShow[0].role,
+        text: projectToShow[0].body
+      });
+    }
   }
 
   render() {
@@ -27,11 +41,11 @@ class ShowProject extends Component {
         <div className={styles.description}>
           <p>{text}</p>
         </div>
-        <div className={styles.competenses}>
+        {/* <div className={styles.competenses}>
           <ul>
             <li />
           </ul>
-        </div>
+        </div> */}
       </div>
     );
   }

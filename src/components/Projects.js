@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Footer from './Footer';
 import Card from './Card';
-import Navbar from './Navbar';
 import styles from './Projects.css';
-import { connect } from 'react-redux';
-// import * as types from '../actions/projectAction';
 
 class Projects extends Component {
   state = {
@@ -36,8 +33,7 @@ class Projects extends Component {
 
     return (
       <Fragment>
-        <Navbar />
-        <div className={styles.wrapper}>
+        <div>
           <div
             className={
               !animate
@@ -57,8 +53,4 @@ class Projects extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  projects: state.projects
-});
-
-export default connect(mapStateToProps)(Projects);
+export default Projects;
