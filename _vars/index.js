@@ -1,3 +1,3 @@
 module.exports = {
-  JWTsecret: 'this-is a private secret'
+  JWTsecret: process.env.JWT_SECRET
 };
