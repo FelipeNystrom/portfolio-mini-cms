@@ -20,14 +20,13 @@ class ShowProjects extends Component {
   }
 
   render() {
-    const { match } = this.props;
-    const { projects, loading } = this.state;
+    const { loading, projects } = this.state;
     const generateProjects = projects.map((project, i) => (
       <li key={i} className={styles.item}>
         <div className={styles.itemTitle}>{project.title}</div>
         <span className={styles.option}>
           <button>
-            <Link to={`${match.url}/edit/project/${project.id}`}>Edit</Link>
+            <Link to={`/admin/edit/project/${project.id}`}>Edit</Link>
           </button>
         </span>
       </li>

@@ -104,7 +104,7 @@ const mapStateToProps = state => {
   return {
     username: state.user.name,
     id: state.user.userId,
-    projects: [state.user.posts]
+    projects: state.user.posts
   };
 };
 

@@ -25,8 +25,8 @@ class Admin extends Component {
   };
 
   render() {
-    const { projects, userId } = this.state;
-    const { match } = this.props;
+    const { userId } = this.state;
+    const { projects } = this.props;
     // const { projects, userId } = user;
     return (
       <Fragment>
@@ -37,6 +37,7 @@ class Admin extends Component {
           render={() => (
             <HandleProject
               userId={userId}
+              projects={projects}
               updateProjects={this.updateProjects}
             />
           )}
@@ -54,7 +55,7 @@ class Admin extends Component {
 
         <Route
           path={`/admin/show-projects`}
-          render={() => <ShowProjects match={match} projects={projects} />}
+          render={props => <ShowProjects {...props} projects={projects} />}
         />
 
         <Route
@@ -62,9 +63,9 @@ class Admin extends Component {
           render={props => (
             <HandleProject
               {...props}
+              projects={projects}
               userId={userId}
               update
-              updateProjects={this.updateProjects}
             />
           )}
         />

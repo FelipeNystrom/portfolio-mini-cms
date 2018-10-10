@@ -98,7 +98,7 @@ class App extends Component {
             <Fragment>
               {this.generateNavbar(props, 'admin')}
               <div className={styles.wrapper}>
-                <Admin user={user} />
+                <Admin projects={projects} user={user} />
               </div>
             </Fragment>
           )}

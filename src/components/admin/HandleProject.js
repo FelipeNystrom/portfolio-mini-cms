@@ -1,7 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import ReactDropzone from 'react-dropzone';
 import styles from './HandleProject.css';
+import {
+  updateProject,
+  newProject,
+  deleteProject,
+  loadProjects
+} from '../../_actions/projectAction';
 
 class HandleProject extends Component {
   state = {
@@ -21,10 +28,25 @@ class HandleProject extends Component {
   };
 
   componentDidMount() {
-    const { update, match } = this.props;
+    const { update, match, projects } = this.props;
     if (update) {
-      this.getProject(match.params.id);
-      this.setState({ update: true });
+      if (projects.length === 0) {
+        this.getProject(match.params.id);
+      } else {
+        const projectToUpdate = projects.filter(
+          project => project.id === parseInt(match.params.id, 0)
+        );
+
+        const imgSrc = { preview: projectToUpdate[0].image };
+        this.setState({
+          titleInput: projectToUpdate[0].title,
+          bodyInput: projectToUpdate[0].body,
+          roleInput: projectToUpdate[0].role,
+          oldImgPublicId: projectToUpdate[0].image_public_id,
+          files: [imgSrc],
+          update: true
+        });
+      }
     }
   }
 
@@ -66,22 +88,11 @@ class HandleProject extends Component {
           bodyInput: project.body,
           roleInput: project.role,
           oldImgPublicId: project.image_public_id,
-          files: [imgSrc]
+          files: [imgSrc],
+          update: true
         });
       })
       .catch(err => console.error(err));
-  };
-
-  req = (url, methodType, formData) => {
-    console.log(url);
-    console.log(methodType);
-    return fetch(url, {
-      method: methodType,
-      headers: {
-        authorization: localStorage.getItem('token')
-      },
-      body: formData
-    });
   };
 
   sendToServer = e => {
@@ -96,7 +107,7 @@ class HandleProject extends Component {
       oldImgPublicId
     } = this.state;
 
-    const { updateProjects } = this.props;
+    const { dispatch } = this.props;
 
     let url = 'http://localhost:7000/admin/project/new';
     let methodType = 'POST';
@@ -109,6 +120,7 @@ class HandleProject extends Component {
     if (update) {
       const { match } = this.props;
       const { id } = match.params;
+
       methodType = 'PUT';
       url = `http://localhost:7000/admin/project/update/${id}`;
 
@@ -118,54 +130,36 @@ class HandleProject extends Component {
         formData.append('keepLink', files[0].preview);
       }
 
-      this.req(url, methodType, formData)
-        .then(res => res.json())
-        .then(msg =>
-          this.setState({
-            msgFromServer: msg.message,
-            redirect: true
-          })
-        )
-        .catch(err => console.error('error: ', err));
+      dispatch(updateProject(url, methodType, formData));
+      this.setState({ redirect: true });
     }
 
     if (destroy) {
       const { match } = this.props;
       const { id } = match.params;
       url = `http://localhost:7000/admin/project/delete/${id}`;
-
       methodType = 'DELETE';
       const deleteImg = new FormData();
       deleteImg.append('publicId', oldImgPublicId);
-
-      this.req(url, methodType, deleteImg)
-        .then(res => res.json())
-        .then(msg => {
-          updateProjects(msg.id);
-          this.setState({
-            msgFromServer: msg.message,
-            redirect: true
-          });
-        })
-        .catch(err => console.error('error: ', err));
+      dispatch(deleteProject(url, methodType, deleteImg));
+      this.setState({
+        // msgFromServer: msg.message,
+        redirect: true
+      });
     }
 
     if (methodType === 'POST') {
-      this.req(url, methodType, formData)
-        .then(res => res.json())
-        .then(result => {
-          console.log(result);
-          updateProjects(result.id);
-          this.setState({
-            msgFromServer: result.message,
-            titleInput: '',
-            bodyInput: '',
-            roleInput: '',
-            files: []
-          });
-        })
-        .catch(err => console.error('error: ', err));
+      dispatch(newProject(url, methodType, formData));
+
+      this.setState({
+        // msgFromServer: result.message,
+        titleInput: '',
+        bodyInput: '',
+        roleInput: '',
+        files: []
+      });
     }
+    dispatch(loadProjects());
   };
 
   render() {
@@ -267,5 +261,4 @@ class HandleProject extends Component {
     );
   }
 }
-
-export default HandleProject;
+export default withRouter(connect()(HandleProject));

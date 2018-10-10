@@ -67,20 +67,14 @@ class Form extends Component {
         }
       }
       if (register) {
-        Auth.register(usernameInput, passwordInput, emailInput);
+        this.props.dispatch(
+          Auth.register(usernameInput, passwordInput, emailInput)
+        );
         if (this._isMounted) {
           this.setState({ redirect: true });
         }
       }
     }
-
-    // this.setState({
-    //   usernameInput: '',
-    //   passwordInput: '',
-    //   emailInput: '',
-    //   formErrors: true,
-    //   formErrorMsg: 'Ooops!\n Do you have the right credentials?'
-    // });
   };
 
   send = async (username, password, email = null) => {

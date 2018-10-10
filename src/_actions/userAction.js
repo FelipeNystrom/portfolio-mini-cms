@@ -5,8 +5,12 @@ const loggedInSuccess = user => {
   return { type: types.USER_LOGGED_IN, user };
 };
 
-const loginRequest = user => {
-  return { type: types.USER_LOGIN_REQUEST, user };
+const loginRequest = () => {
+  return { type: types.USER_LOGIN_REQUEST };
+};
+
+const registerRequest = () => {
+  return { type: types.USER_REGISTER_REQUEST };
 };
 
 const loggedOutSuccess = () => {
@@ -24,8 +28,13 @@ const registerFailure = error => {
 class Auth {
   static register = (username, password, email) => {
     return dispatch => {
+      dispatch(registerRequest());
       return User.Register(username, password, email)
-        .then(newUser => dispatch(loggedInSuccess(newUser)))
+        .then(newUser => {
+          console.log(newUser);
+          localStorage.setItem('token', newUser.token);
+          dispatch(loggedInSuccess({ name: newUser.user }));
+        })
         .catch(err => dispatch(registerFailure(err)));
     };
   };
