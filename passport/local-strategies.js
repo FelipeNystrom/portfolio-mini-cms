@@ -9,7 +9,6 @@ const config = require('../_vars');
 module.exports = passport => {
   passport.use(
     new LocalStrategy((username, password, done) => {
-      console.log(username);
       return verifyUser(username).then(validUser => {
         bcrypt
           .compare(password, validUser.password)

@@ -126,7 +126,6 @@ router.put(
     console.log('updated post ', projectUpdate);
     res.status(200);
     res.send({
-      id: req.user.id,
       message: 'Post updated successfully!'
     });
   }
@@ -144,10 +143,9 @@ router.delete(
     const resultFromDB = await deletePost(id);
 
     if (resultFromImgStore.result === 'ok') {
-      console.log(resultFromDB);
       console.log('is deleted');
+      console.log(resultFromDB);
+      res.send({ id: req.user.id });
     }
-
-    res.send({ id: req.user.id });
   }
 );

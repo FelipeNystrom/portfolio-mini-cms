@@ -23,7 +23,6 @@ const signin = (req, res) => {
 const signup = (req, res, next) => {
   const { username, email, password } = req.body;
   const saltRounds = 12;
-
   if (!username || !password || !email) {
     res
       .status(422)
@@ -36,9 +35,12 @@ const signup = (req, res, next) => {
         .hash(password, saltRounds)
         .then(hash => {
           return createUser(username, email, hash)
-            .then(newUser =>
-              res.json({ token: tokenForUser(newUser), user: newUser.username })
-            )
+            .then(newUser => {
+              res.json({
+                token: tokenForUser(newUser),
+                user: newUser.username
+              });
+            })
             .catch(err => {
               res.error({ message: 'Error saving user to database.' });
             });
