@@ -12,7 +12,8 @@ server.use(express.urlencoded({ extended: false }));
 server.use(passport.initialize());
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(cors());
-require('./passport')(passport, db);
+require('./passport')(passport);
+require('dotenv').config();
 // use mounted routes
 mountRoutes(server);
 

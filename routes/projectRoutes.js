@@ -9,7 +9,7 @@ const {
   getSpecificProjectFromUser,
   deletePost,
   updateProject
-} = require('../passport/queries');
+} = require('../db/queries');
 
 module.exports = router;
 

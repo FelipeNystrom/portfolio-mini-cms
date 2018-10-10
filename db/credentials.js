@@ -1,6 +1,6 @@
 module.exports = {
-  user: 'shakka',
-  host: 'localhost',
-  database: 'portfolio',
-  password: 'åñ©º:7-¿ªÀêdË½PcCÎ78£ÔÆª>Ä'
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD
 };

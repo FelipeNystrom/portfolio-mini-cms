@@ -1,5 +1,5 @@
 module.exports = {
-  cloud_name: 'shakka',
-  api_key: '545291235116187',
-  api_secret: 'nQIUWZv3I2GlGE1hWnMdlaMk7WM'
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
 };

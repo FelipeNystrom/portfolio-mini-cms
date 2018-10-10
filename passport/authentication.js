@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
-const { createUser, verifyUser, getAllProjectsFromUser } = require('./queries');
+const {
+  createUser,
+  verifyUser,
+  getAllProjectsFromUser
+} = require('../db/queries');
 
 const tokenForUser = user => {
   const timestamp = new Date().getTime();
