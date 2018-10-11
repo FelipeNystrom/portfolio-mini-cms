@@ -61,14 +61,14 @@ class Form extends Component {
     e.preventDefault();
     if (this._isMounted) {
       if (login) {
-        this.props.dispatch(auth.login(usernameInput, passwordInput));
+        this.props.dispatch(auth.Login(usernameInput, passwordInput));
         if (this._isMounted) {
           this.setState({ redirect: true });
         }
       }
       if (register) {
         this.props.dispatch(
-          auth.register(usernameInput, passwordInput, emailInput)
+          auth.Register(usernameInput, passwordInput, emailInput)
         );
         if (this._isMounted) {
           this.setState({ redirect: true });
