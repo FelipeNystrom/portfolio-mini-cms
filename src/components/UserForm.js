@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Auth from '../_actions/userAction';
+import auth from '../_actions/userAction';
 import styles from './UserForm.css';
 
 class Form extends Component {
@@ -61,14 +61,14 @@ class Form extends Component {
     e.preventDefault();
     if (this._isMounted) {
       if (login) {
-        this.props.dispatch(Auth.login(usernameInput, passwordInput));
+        this.props.dispatch(auth.login(usernameInput, passwordInput));
         if (this._isMounted) {
           this.setState({ redirect: true });
         }
       }
       if (register) {
         this.props.dispatch(
-          Auth.register(usernameInput, passwordInput, emailInput)
+          auth.register(usernameInput, passwordInput, emailInput)
         );
         if (this._isMounted) {
           this.setState({ redirect: true });
@@ -165,7 +165,6 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return { user: state.user };
 };
 

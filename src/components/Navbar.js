@@ -3,7 +3,7 @@ import NavbarLink from './NavbarLink';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Auth from '../_actions/userAction';
+import auth from '../_actions/userAction';
 import styles from './Navbar.css';
 
 class Navbar extends Component {
@@ -27,7 +27,7 @@ class Navbar extends Component {
   }
 
   logout = () => {
-    this.props.dispatch(Auth.logout());
+    this.props.dispatch(auth.Logout());
   };
 
   render() {

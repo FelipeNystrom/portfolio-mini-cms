@@ -1,4 +1,4 @@
-import Project from '../_services/projects';
+import project from '../_services/projects';
 import * as types from './actionTypes';
 
 const loadProjectsSuccess = result => {
@@ -8,7 +8,8 @@ const loadProjectsSuccess = result => {
 
 export const loadProjects = () => {
   return dispatch => {
-    return Project.GetAll()
+    return project
+      .GetAll()
       .then(projects => {
         dispatch(loadProjectsSuccess(projects));
       })
@@ -20,7 +21,8 @@ export const loadProjects = () => {
 
 export const updateProject = (url, methodType, formData) => {
   return dispatch => {
-    return Project.UpdateProjectsState(url, methodType, formData)
+    return project
+      .UpdateState(url, methodType, formData)
       .then(projects => {
         dispatch(loadProjectsSuccess(projects));
       })
@@ -32,7 +34,8 @@ export const updateProject = (url, methodType, formData) => {
 
 export const newProject = (url, methodType, formData) => {
   return dispatch => {
-    return Project.UpdateProjectsState(url, methodType, formData)
+    return project
+      .UpdateState(url, methodType, formData)
       .then(projects => {
         dispatch(loadProjectsSuccess(projects));
       })
@@ -44,7 +47,8 @@ export const newProject = (url, methodType, formData) => {
 
 export const deleteProject = (url, methodType, formData) => {
   return dispatch => {
-    return Project.DeleteProject(url, methodType, formData)
+    return project
+      .Delete(url, methodType, formData)
       .then(projects => {
         dispatch(loadProjectsSuccess(projects));
       })

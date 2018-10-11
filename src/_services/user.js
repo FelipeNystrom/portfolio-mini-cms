@@ -1,5 +1,5 @@
-export default class User {
-  static Check(token) {
+class User {
+  Check(token) {
     const url = 'http://localhost:7000/admin';
     return fetch(url, {
       method: 'POST',
@@ -14,7 +14,7 @@ export default class User {
       });
   }
 
-  static Login(username, password) {
+  Login(username, password) {
     const url = `http://localhost:7000/login`;
     return fetch(url, {
       method: 'POST',
@@ -36,7 +36,7 @@ export default class User {
       });
   }
 
-  static Register = (username, password, email) => {
+  Register = (username, password, email) => {
     const url = `http://localhost:7000/register`;
     return fetch(url, {
       method: 'POST',
@@ -59,5 +59,7 @@ export default class User {
       });
   };
 
-  static Logout = id => {};
+  Logout = id => {};
 }
+
+export default new User();

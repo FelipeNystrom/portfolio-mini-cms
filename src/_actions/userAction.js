@@ -26,7 +26,7 @@ const registerFailure = error => {
 };
 
 class Auth {
-  static register = (username, password, email) => {
+  Register = (username, password, email) => {
     return dispatch => {
       dispatch(registerRequest());
       return User.Register(username, password, email)
@@ -39,7 +39,7 @@ class Auth {
     };
   };
 
-  static checkUser = () => {
+  CheckUser = () => {
     return dispatch => {
       const token = localStorage.getItem('token');
 
@@ -57,7 +57,7 @@ class Auth {
     };
   };
 
-  static login = (username, password) => {
+  Login = (username, password) => {
     return dispatch => {
       dispatch(loginRequest(username));
       return User.Login(username, password)
@@ -74,7 +74,7 @@ class Auth {
     };
   };
 
-  static logout = () => {
+  Logout = () => {
     localStorage.removeItem('token');
     return dispatch => {
       dispatch(loggedOutSuccess());
@@ -82,4 +82,4 @@ class Auth {
   };
 }
 
-export default Auth;
+export default new Auth();

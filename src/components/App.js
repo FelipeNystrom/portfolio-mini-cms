@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Projects from './Projects';
-import initalAnimation from './initalAnimation';
+import InitalAnimation from './initalAnimation';
 import UserForm from './UserForm';
 import Admin from './admin/Admin';
 import Navbar from './Navbar';
@@ -45,7 +45,7 @@ class App extends Component {
     const { projects, user } = this.props;
     return (
       <Fragment>
-        <Route exact path="/" component={initalAnimation} />
+        <Route exact path="/" component={InitalAnimation} />
         <Route
           exakt
           path="/projects"

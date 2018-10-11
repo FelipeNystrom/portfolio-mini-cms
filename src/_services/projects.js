@@ -1,7 +1,7 @@
 import { sendToServer } from '../_helpers/projects';
 
-export default class Project {
-  static GetAll() {
+class Project {
+  GetAll() {
     const url = 'http://localhost:7000/';
     return fetch(url)
       .then(res => res.json())
@@ -10,11 +10,13 @@ export default class Project {
       });
   }
 
-  static UpdateProjectsState(url, methodType, formData) {
+  UpdateState(url, methodType, formData) {
     return sendToServer(url, methodType, formData).then(this.GetAll());
   }
 
-  static DeleteProject(url, methodType, formData) {
+  Delete(url, methodType, formData) {
     return sendToServer(url, methodType, formData).then(this.GetAll());
   }
 }
+
+export default new Project();
