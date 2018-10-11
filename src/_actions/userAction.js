@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import User from '../_services/user';
+import user from '../_services/user';
 
 const loggedInSuccess = user => {
   return { type: types.USER_LOGGED_IN, user };
@@ -29,7 +29,8 @@ class Auth {
   Register = (username, password, email) => {
     return dispatch => {
       dispatch(registerRequest());
-      return User.Register(username, password, email)
+      return user
+        .Register(username, password, email)
         .then(newUser => {
           console.log(newUser);
           localStorage.setItem('token', newUser.token);
@@ -44,7 +45,8 @@ class Auth {
       const token = localStorage.getItem('token');
 
       if (token) {
-        return User.Check(token)
+        return user
+          .Check(token)
           .then(user => {
             if (user.name) {
               dispatch(loggedInSuccess(user));
@@ -60,7 +62,8 @@ class Auth {
   Login = (username, password) => {
     return dispatch => {
       dispatch(loginRequest(username));
-      return User.Login(username, password)
+      return user
+        .Login(username, password)
         .then(user => {
           localStorage.setItem('token', user.token);
           const userInfo = {
