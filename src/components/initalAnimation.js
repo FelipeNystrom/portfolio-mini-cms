@@ -1,28 +1,68 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import Greetings from './Greetings';
 import styles from './initalAnimation.css';
 
 class Hello extends Component {
   state = {
     fadeIn: false,
-    switchToGreeting: false
+    switchToGreeting: false,
+    fullname: '',
+    profilePic: '',
+    redirect: false,
+    loading: true
   };
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ fadeIn: true });
-    }, 0);
+    const pp = localStorage.getItem('pp');
+    const fn = localStorage.getItem('fn');
+    console.log(pp);
+    if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
+      console.log((!pp || pp === undefined) && (!fn || fn === undefined));
+      const url = `http://localhost:7000/`;
+      fetch(url)
+        .then(res => {
+          if (res.status === 204) {
+            this.setState({ redirect: true });
+          } else {
+            return res.json();
+          }
+        })
+        .then(owner => {
+          localStorage.setItem('pp', owner.profilepic);
+          localStorage.setItem('fn', owner.concat);
+          this.setState({
+            loading: false,
+            fullname: owner.concat,
+            profilePic: owner.profilepic,
+            fadeIn: true
+          });
+        })
+        .catch(err => console.error(err));
+    } else {
+      this.setState({
+        loading: false,
+        fullname: fn,
+        profilePic: pp,
+        fadeIn: true
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.fadeIn !== this.state.fadeIn) {
       setTimeout(() => {
         this.setState({ switchToGreeting: true });
-      }, 3200);
+      }, 2500);
     }
   }
   render() {
-    const { fadeIn, switchToGreeting } = this.state;
-    const titlePhrase = ['Jag heter Aida Amoli!', 'Kul att du hittat hit'];
+    const {
+      fadeIn,
+      switchToGreeting,
+      redirect,
+      fullname,
+      profilePic
+    } = this.state;
     return (
       <Fragment>
         {!switchToGreeting && (
@@ -38,8 +78,9 @@ class Hello extends Component {
         )}
 
         {switchToGreeting && (
-          <Greetings upper={titlePhrase[0]} lower={titlePhrase[1]} />
+          <Greetings fullname={fullname} profilePic={profilePic} />
         )}
+        {redirect && <Redirect to="/register" />}
       </Fragment>
     );
   }

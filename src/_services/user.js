@@ -36,22 +36,11 @@ class User {
       });
   }
 
-  Register = (username, password, email) => {
+  Register = formData => {
     const url = `http://localhost:7000/register`;
     return fetch(url, {
       method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      mode: 'cors',
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        email: email
-      })
+      body: formData
     })
       .then(res => res.json())
       .catch(err => {
@@ -59,7 +48,8 @@ class User {
       });
   };
 
-  Logout = id => {};
+  // if needed later
+  // Logout = id => {};
 }
 
 export default new User();

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import styles from './Greetings.css';
-import profileImg from '../media/profilbild-aida.jpg';
 
 class TitleAnimation extends Component {
   state = {
@@ -23,7 +22,8 @@ class TitleAnimation extends Component {
   }
   render() {
     const { animate, redirect } = this.state;
-    const { upper, lower } = this.props;
+    const { fullname, profilePic } = this.props;
+    console.log(this.props);
     return (
       <div className={styles.titleWrapper}>
         <div className={styles.animationWrapper}>
@@ -34,14 +34,14 @@ class TitleAnimation extends Component {
                 : styles.upper + ' ' + styles.showBorderBottom
             }
           >
-            {upper}
+            Jag heter <span className={styles.fullName}>{fullname}</span>
           </div>
           <div
             className={
               !animate ? styles.lower : styles.lower + ' ' + styles.animateLower
             }
           >
-            {lower}
+            Kul att du hittat hit
           </div>
           <div className={styles.imgWrapper}>
             <img
@@ -50,7 +50,7 @@ class TitleAnimation extends Component {
                   ? styles.profilePic
                   : styles.profilePic + ' ' + styles.animateProfilePic
               }
-              src={profileImg}
+              src={profilePic}
               alt="profile-pic"
             />
           </div>

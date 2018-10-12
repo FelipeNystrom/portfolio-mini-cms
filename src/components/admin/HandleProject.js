@@ -174,11 +174,6 @@ class HandleProject extends Component {
 
     const { update, destroy } = this.props;
 
-    const previewStyle = {
-      display: 'inline',
-      width: 100,
-      height: 100
-    };
     return (
       <Fragment>
         <form className={styles.form} onSubmit={this.sendToServer}>
@@ -224,7 +219,7 @@ class HandleProject extends Component {
                     alt="Preview"
                     key={i}
                     src={file.preview}
-                    style={previewStyle}
+                    className={styles.previewStyle}
                   />
                 ))}
               </div>

@@ -83,9 +83,8 @@ class App extends Component {
 
         <Route
           path="/register"
-          render={props => (
+          render={() => (
             <Fragment>
-              {this.generateNavbar(props, 'form')}
               <div className={styles.wrapper}>
                 <UserForm formName="register" />
               </div>

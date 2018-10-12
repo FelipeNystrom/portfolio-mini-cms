@@ -2,7 +2,7 @@ import { sendToServer } from '../_helpers/projects';
 
 class Project {
   GetAll() {
-    const url = 'http://localhost:7000/';
+    const url = 'http://localhost:7000/getAll';
     return fetch(url)
       .then(res => res.json())
       .catch(err => {

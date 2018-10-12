@@ -26,13 +26,12 @@ const registerFailure = error => {
 };
 
 class Auth {
-  Register = (username, password, email) => {
+  Register = formData => {
     return dispatch => {
       dispatch(registerRequest());
       return user
-        .Register(username, password, email)
+        .Register(formData)
         .then(newUser => {
-          console.log(newUser);
           localStorage.setItem('token', newUser.token);
           dispatch(loggedInSuccess({ name: newUser.user }));
         })

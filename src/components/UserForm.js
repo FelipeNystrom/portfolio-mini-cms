@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import ReactDropzone from 'react-dropzone';
 import auth from '../_actions/userAction';
 import styles from './UserForm.css';
 
@@ -9,11 +10,15 @@ class Form extends Component {
     usernameInput: '',
     passwordInput: '',
     emailInput: '',
+    firsNameInput: '',
+    lastNameInput: '',
+    files: [],
     register: false,
     login: false,
     formErrors: false,
     formErrorMsg: '',
-    redirect: false
+    redirect: false,
+    setupPortfolio: false
   };
 
   _isMounted = false;
@@ -31,19 +36,19 @@ class Form extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    this.state.files.forEach(file => {
+      window.URL.revokeObjectURL(file.preview);
+    });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const { formName } = this.props;
-  //   if (prevProps.formName !== this.props.formName) {
-  //     if (formName === 'register') {
-  //       this.setState({ register: false });
-  //     }
-  //     if (formName === 'login') {
-  //       this.setState({ login: false });
-  //     }
-  //   }
-  // }
+  onPreviewDrop = (files, rejected) => {
+    if (files) {
+      this.setState({ files: files, fileTypeError: '' });
+    }
+    if (rejected.length !== 0) {
+      this.setState({ fileTypeError: 'Image must be of type .jpg/.jpeg/.png' });
+    }
+  };
 
   handleChange = e => {
     e.preventDefault();
@@ -56,7 +61,10 @@ class Form extends Component {
       login,
       usernameInput,
       passwordInput,
-      emailInput
+      emailInput,
+      firsNameInput,
+      lastNameInput,
+      files
     } = this.state;
     e.preventDefault();
     if (this._isMounted) {
@@ -67,43 +75,19 @@ class Form extends Component {
         }
       }
       if (register) {
-        this.props.dispatch(
-          auth.Register(usernameInput, passwordInput, emailInput)
-        );
+        const formData = new FormData();
+        formData.append('username', usernameInput);
+        formData.append('password', passwordInput);
+        formData.append('email', emailInput);
+        formData.append('image', files[0]);
+        formData.append('firstname', firsNameInput);
+        formData.append('lastname', lastNameInput);
+        this.props.dispatch(auth.Register(formData));
         if (this._isMounted) {
-          this.setState({ redirect: true });
+          this.setState({ setupPortfolio: true });
         }
       }
     }
-  };
-
-  send = async (username, password, email = null) => {
-    const { formName } = this.props;
-    const apiUrl = `http://localhost:7000/${formName}`;
-    fetch(apiUrl, {
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      mode: 'cors',
-      body: JSON.stringify({
-        username: username,
-        email: email,
-        password: password
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.token) {
-          localStorage.setItem('token', data.token);
-          if (this._isMounted) {
-            this.setState({ redirect: true });
-          }
-        }
-      });
   };
 
   render() {
@@ -114,10 +98,14 @@ class Form extends Component {
       formErrorMsg,
       register,
       emailInput,
-      redirect
+      redirect,
+      firsNameInput,
+      lastNameInput,
+      files,
+      setupPortfolio
     } = this.state;
 
-    const { formName } = this.props;
+    const { formName, loading } = this.props;
     return (
       <Fragment>
         <div className={styles.wrapper}>
@@ -135,17 +123,6 @@ class Form extends Component {
                 placeholder="Username"
                 required
               />
-
-              {register && (
-                <input
-                  type="email"
-                  name="emailInput"
-                  onChange={this.handleChange}
-                  value={emailInput}
-                  placeholder="Email"
-                  required
-                />
-              )}
               <input
                 type="password"
                 name="passwordInput"
@@ -154,6 +131,66 @@ class Form extends Component {
                 placeholder="Password"
                 required
               />
+              {register && (
+                <Fragment>
+                  {loading ? (
+                    <div>Setting up your portfolio</div>
+                  ) : (
+                    <Fragment>
+                      <input
+                        type="email"
+                        name="emailInput"
+                        onChange={this.handleChange}
+                        value={emailInput}
+                        placeholder="Email"
+                        required
+                      />
+                      <input
+                        type="text"
+                        name="firsNameInput"
+                        onChange={this.handleChange}
+                        value={firsNameInput}
+                        placeholder="Firstname"
+                        required
+                      />
+                      <input
+                        type="text"
+                        name="lastNameInput"
+                        onChange={this.handleChange}
+                        value={lastNameInput}
+                        placeholder="Lastname"
+                        required
+                      />
+                      <ReactDropzone
+                        className={styles.dropzone}
+                        accept="image/jpeg, image/png"
+                        onDrop={this.onPreviewDrop}
+                        multiple={false}
+                      >
+                        <div className={styles.dropzoneInner}>
+                          <h6>Drop Image Here</h6>
+                        </div>
+                      </ReactDropzone>
+                      {files.length > 0 && (
+                        <div className={styles.preview}>
+                          <h6>Preview</h6>
+                          {files.map((file, i) => (
+                            <img
+                              alt="Preview"
+                              key={i}
+                              src={file.preview}
+                              className={styles.previewStyle}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </Fragment>
+                  )}
+
+                  {setupPortfolio && <Redirect to="/" />}
+                </Fragment>
+              )}
+
               <input type="submit" value={formName} />
             </form>
           </div>
@@ -165,7 +202,9 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.user };
+  return {
+    loading: state.user.loading
+  };
 };
 
 export default withRouter(connect(mapStateToProps)(Form));
