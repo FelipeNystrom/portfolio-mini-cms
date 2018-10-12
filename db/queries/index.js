@@ -5,6 +5,11 @@ const getAllProjects = () => {
   return db.manyOrNone(sql);
 };
 
+const userExist = () => {
+  const sql = "SELECT CONCAT(firstname, ' ', lastname), profilePic from users";
+  return db.oneOrNone(sql);
+};
+
 const verifyUser = username => {
   const sql = 'SELECT * FROM users WHERE username = $1';
   return db.oneOrNone(sql, [username]);
@@ -15,10 +20,10 @@ const findUserById = id => {
   return db.oneOrNone(sql, [id]);
 };
 
-const createUser = (username, email, password) => {
+const createUser = (username, firstname, lastname, email, hash, profilePic) => {
   const sql =
-    'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING username';
-  return db.one(sql, [username, email, password]);
+    'INSERT INTO users (username, email , password, firstname, lastname, profilePic) VALUES ($1, $2, $3, $4, $5, $6) RETURNING username';
+  return db.one(sql, [username, email, hash, firstname, lastname, profilePic]);
 };
 
 const getAllProjectsFromUser = id => {
@@ -63,5 +68,6 @@ module.exports = {
   insertNewProject,
   deletePost,
   getCountOfProjects,
-  updateProject
+  updateProject,
+  userExist
 };

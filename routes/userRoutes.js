@@ -3,13 +3,23 @@ const router = new Router();
 const passport = require('passport');
 const requireSignIn = passport.authenticate('local', { session: false });
 const authenticate = require('../passport/authentication');
-const { getAllProjects } = require('../db/queries');
+const { getAllProjects, userExist } = require('../db/queries');
+const { handleFormData } = require('../imageStorage');
 
 module.exports = router;
 
 router.get('/', async (req, res) => {
+  const isThereAUser = await userExist();
+  if (isThereAUser === null) {
+    res.sendStatus(204);
+  } else {
+    console.log(isThereAUser)
+    res.send(isThereAUser);
+  }
+});
+
+router.get('/getAll', async (req, res) => {
   const projects = await getAllProjects();
-  res.status(200);
   if (projects.length > 0) {
     res.send({
       message: `fetched ${projects.length} projects`,
@@ -22,9 +32,8 @@ router.get('/', async (req, res) => {
     });
   }
 });
-
 // register new user
-router.post('/register', authenticate.signup);
+router.post('/register', handleFormData.single('image'), authenticate.signup);
 // login user
 router.post('/login', requireSignIn, authenticate.signin);
 

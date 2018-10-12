@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
+const { uploadImg } = require('../imageStorage');
 const {
   createUser,
   verifyUser,
@@ -24,13 +25,25 @@ const signin = (req, res) => {
   });
 };
 
-const signup = (req, res, next) => {
-  const { username, email, password } = req.body;
+const signup = async (req, res, next) => {
+  const cloudinaryResult = await uploadImg(req.file.path);
+  const profilePic = await cloudinaryResult.secure_url;
+  const publicId = await cloudinaryResult.public_id;
+
+  const { username, email, password, firstname, lastname } = req.body;
   const saltRounds = 12;
-  if (!username || !password || !email) {
-    res
-      .status(422)
-      .send({ error: 'You must provide an email, a username and a password.' });
+  if (
+    !username ||
+    !password ||
+    !email ||
+    !firstname ||
+    !lastname ||
+    !profilePic
+  ) {
+    res.status(422).send({
+      error:
+        'You must provide an email, username, firstname, lastname, password and a profile picture.'
+    });
   }
   verifyUser(username).then(result => {
     if (result === null) {
@@ -38,22 +51,34 @@ const signup = (req, res, next) => {
       bcrypt
         .hash(password, saltRounds)
         .then(hash => {
-          return createUser(username, email, hash)
+          return createUser(
+            username,
+            firstname,
+            lastname,
+            email,
+            hash,
+            profilePic
+          )
             .then(newUser => {
-              res.json({
+              console.log(newUser);
+              res.send({
                 token: tokenForUser(newUser),
-                user: newUser.username
+                user: newUser
               });
             })
             .catch(err => {
-              res.error({ message: 'Error saving user to database.' });
+              console.log(err);
+              res
+                .status(400)
+                .send({ message: 'Error saving user to database.' });
             });
         })
         .catch(err => {
+          console.log(err);
           return next(err);
         });
     } else {
-      res.json({ error: 'user already exists' });
+      res.status(403).send({ message: 'user already exists' });
     }
   });
 };
