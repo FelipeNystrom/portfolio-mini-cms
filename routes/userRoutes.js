@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
   if (isThereAUser === null) {
     res.sendStatus(204);
   } else {
-    console.log(isThereAUser)
     res.send(isThereAUser);
   }
 });
@@ -34,6 +33,15 @@ router.get('/getAll', async (req, res) => {
 });
 // register new user
 router.post('/register', handleFormData.single('image'), authenticate.signup);
+
+router.get('/register', async (req, res) => {
+  const isThereAUser = await userExist();
+  if (isThereAUser !== null) {
+    res.sendStatus(401);
+  } else {
+    res.sendStatus(200);
+  }
+});
 // login user
 router.post('/login', requireSignIn, authenticate.signin);
 

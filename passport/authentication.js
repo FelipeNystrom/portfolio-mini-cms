@@ -28,7 +28,6 @@ const signin = (req, res) => {
 const signup = async (req, res, next) => {
   const cloudinaryResult = await uploadImg(req.file.path);
   const profilePic = await cloudinaryResult.secure_url;
-  const publicId = await cloudinaryResult.public_id;
 
   const { username, email, password, firstname, lastname } = req.body;
   const saltRounds = 12;
