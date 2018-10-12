@@ -18,7 +18,8 @@ class Form extends Component {
     formErrors: false,
     formErrorMsg: '',
     redirect: false,
-    setupPortfolio: false
+    setupPortfolio: false,
+    unAuth: false
   };
 
   _isMounted = false;
@@ -27,7 +28,13 @@ class Form extends Component {
     this._isMounted = true;
     const { formName } = this.props;
     if (formName === 'register') {
-      this.setState({ register: true });
+      fetch('http://localhost:7000/').then(res => {
+        if (res.status === 401) {
+          this.setState({ unAuth: true });
+        } else {
+          this.setState({ register: true });
+        }
+      });
     }
     if (formName === 'login') {
       this.setState({ login: true });
@@ -102,100 +109,104 @@ class Form extends Component {
       firsNameInput,
       lastNameInput,
       files,
-      setupPortfolio
+      setupPortfolio,
+      unAuth
     } = this.state;
 
     const { formName, loading } = this.props;
     return (
       <Fragment>
-        <div className={styles.wrapper}>
-          <div className={styles.container}>
-            <h1>{formName}</h1>
-            {formErrors && (
-              <div className={styles.errorMsg}>{formErrorMsg}</div>
-            )}
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                name="usernameInput"
-                onChange={this.handleChange}
-                value={usernameInput}
-                placeholder="Username"
-                required
-              />
-              <input
-                type="password"
-                name="passwordInput"
-                onChange={this.handleChange}
-                value={passwordInput}
-                placeholder="Password"
-                required
-              />
-              {register && (
-                <Fragment>
-                  {loading ? (
-                    <div>Setting up your portfolio</div>
-                  ) : (
-                    <Fragment>
-                      <input
-                        type="email"
-                        name="emailInput"
-                        onChange={this.handleChange}
-                        value={emailInput}
-                        placeholder="Email"
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="firsNameInput"
-                        onChange={this.handleChange}
-                        value={firsNameInput}
-                        placeholder="Firstname"
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="lastNameInput"
-                        onChange={this.handleChange}
-                        value={lastNameInput}
-                        placeholder="Lastname"
-                        required
-                      />
-                      <ReactDropzone
-                        className={styles.dropzone}
-                        accept="image/jpeg, image/png"
-                        onDrop={this.onPreviewDrop}
-                        multiple={false}
-                      >
-                        <div className={styles.dropzoneInner}>
-                          <h6>Drop Image Here</h6>
-                        </div>
-                      </ReactDropzone>
-                      {files.length > 0 && (
-                        <div className={styles.preview}>
-                          <h6>Preview</h6>
-                          {files.map((file, i) => (
-                            <img
-                              alt="Preview"
-                              key={i}
-                              src={file.preview}
-                              className={styles.previewStyle}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </Fragment>
-                  )}
-
-                  {setupPortfolio && <Redirect to="/" />}
-                </Fragment>
+        <Fragment>
+          <div className={styles.wrapper}>
+            <div className={styles.container}>
+              <h1>{formName}</h1>
+              {formErrors && (
+                <div className={styles.errorMsg}>{formErrorMsg}</div>
               )}
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  type="text"
+                  name="usernameInput"
+                  onChange={this.handleChange}
+                  value={usernameInput}
+                  placeholder="Username"
+                  required
+                />
+                <input
+                  type="password"
+                  name="passwordInput"
+                  onChange={this.handleChange}
+                  value={passwordInput}
+                  placeholder="Password"
+                  required
+                />
+                {register && (
+                  <Fragment>
+                    {loading ? (
+                      <div>Setting up your portfolio</div>
+                    ) : (
+                      <Fragment>
+                        <input
+                          type="email"
+                          name="emailInput"
+                          onChange={this.handleChange}
+                          value={emailInput}
+                          placeholder="Email"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="firsNameInput"
+                          onChange={this.handleChange}
+                          value={firsNameInput}
+                          placeholder="Firstname"
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="lastNameInput"
+                          onChange={this.handleChange}
+                          value={lastNameInput}
+                          placeholder="Lastname"
+                          required
+                        />
+                        <ReactDropzone
+                          className={styles.dropzone}
+                          accept="image/jpeg, image/png"
+                          onDrop={this.onPreviewDrop}
+                          multiple={false}
+                        >
+                          <div className={styles.dropzoneInner}>
+                            <h6>Drop Image Here</h6>
+                          </div>
+                        </ReactDropzone>
+                        {files.length > 0 && (
+                          <div className={styles.preview}>
+                            <h6>Preview</h6>
+                            {files.map((file, i) => (
+                              <img
+                                alt="Preview"
+                                key={i}
+                                src={file.preview}
+                                className={styles.previewStyle}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </Fragment>
+                    )}
 
-              <input type="submit" value={formName} />
-            </form>
+                    {setupPortfolio && <Redirect to="/" />}
+                  </Fragment>
+                )}
+
+                <input type="submit" value={formName} />
+              </form>
+            </div>
           </div>
-        </div>
-        {redirect && <Redirect to="/admin" />}
+          {redirect && <Redirect to="/admin" />}
+        </Fragment>
+        {unAuth && <Redirect to="/401" />}
       </Fragment>
     );
   }

@@ -5,6 +5,7 @@ import UserForm from './UserForm';
 import Admin from './admin/Admin';
 import Navbar from './Navbar';
 import ShowProject from './ShowProject';
+import UnAuth from './401';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from './App.css';
@@ -103,6 +104,7 @@ class App extends Component {
           )}
         />
         <Route path="/logout" render={() => <Redirect to="/projects" />} />
+        <Route path="/401" component={UnAuth} />
       </Fragment>
     );
   }
