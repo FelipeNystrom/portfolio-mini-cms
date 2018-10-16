@@ -31,7 +31,7 @@ const createUser = (
   aboutMe
 ) => {
   const sql =
-    'INSERT INTO users (username, email , password, firstname, lastname, profilepic, about_me, public_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING username';
+    'INSERT INTO users (username, email , password, firstname, lastname, profilepic, about_me, public_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id ,username';
   return db.one(sql, [
     username,
     email,
