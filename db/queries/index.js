@@ -31,7 +31,7 @@ const createUser = (
   aboutMe
 ) => {
   const sql =
-    'INSERT INTO users (username, email , password, firstname, lastname, profile_pic, about_me, public_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING username';
+    'INSERT INTO users (username, email , password, firstname, lastname, profilepic, about_me, public_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING username';
   return db.one(sql, [
     username,
     email,
@@ -56,7 +56,7 @@ const updateUser = (
   publicId
 ) => {
   const sql =
-    'UPDATE users SET username = $2, email = $3, password = $4, firstname = $5, lastname = $6, profile_pic = $7 , about_me = $8, public_id = $9 WHERE id = $1';
+    'UPDATE users SET username = $2, email = $3, password = $4, firstname = $5, lastname = $6, profilepic = $7 , about_me = $8, public_id = $9 WHERE id = $1';
   return db.one(sql, [
     id,
     username,
