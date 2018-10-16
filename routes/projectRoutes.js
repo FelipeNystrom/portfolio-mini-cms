@@ -3,12 +3,14 @@ const router = new Router();
 const passport = require('passport');
 const checkToken = passport.authenticate('jwt', { session: false });
 const { handleFormData, deleteImg, uploadImg } = require('../imageStorage');
+const { tempStorageTruncate } = require('../_helpers');
 const {
   getAllProjectsFromUser,
   insertNewProject,
   getSpecificProjectFromUser,
   deletePost,
-  updateProject
+  updateProject,
+  findUserById
 } = require('../db/queries');
 
 module.exports = router;
@@ -16,7 +18,6 @@ module.exports = router;
 // admin
 router.post('/', checkToken, async (req, res) => {
   getAllProjectsFromUser(req.user.id).then(result => {
-    res.status(200);
     res.send({
       name: req.user.username,
       userId: req.user.id,
@@ -25,10 +26,24 @@ router.post('/', checkToken, async (req, res) => {
   });
 });
 
+router.get('/profile', checkToken, async (req, res) => {
+  const user = findUserById(req.user.id);
+  res.send({ user: user });
+});
+
+router.post(
+  '/profile',
+  checkToken,
+  handleFormData.single('image'),
+  async (req, res) => {
+    const { id } = req.user;
+    tempStorageTruncate();
+  }
+);
+
 router.get('/projects', checkToken, async (req, res) => {
   getAllProjectsFromUser(req.user.id).then(result => {
     console.log(result);
-    res.status(200);
     res.send({
       posts: result
     });
@@ -49,7 +64,6 @@ router.post(
     insertNewProject(title, text, author, img, role, publicId)
       .then(result => {
         if (result) {
-          res.status(200);
           res.json({
             id: req.user.id,
             message: `A post with the title ${
@@ -61,6 +75,7 @@ router.post(
       .catch(err => {
         res.error('Error: ' + err);
       });
+    tempStorageTruncate();
   }
 );
 
@@ -75,7 +90,6 @@ router.get('/project/update/:id', checkToken, async (req, res) => {
           message: "Sorry! We couldn't find the project you were looking for "
         });
       }
-      res.status(200);
       res.send(project[0]);
     })
     .catch(err => console.error('error: ' + err));
@@ -90,6 +104,7 @@ router.put(
     const { id } = req.params;
     console.log(req.body);
     console.log(id);
+
     // Prepare variables to update db with
     let img;
     let publicId;

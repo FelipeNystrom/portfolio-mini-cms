@@ -6,7 +6,7 @@ const {
   createUser,
   verifyUser,
   getAllProjectsFromUser,
-  isThereAUSer
+  userExist
 } = require('../db/queries');
 
 const tokenForUser = user => {
@@ -32,6 +32,7 @@ const signup = async (req, res, next) => {
     res.sendStatus(401);
   } else {
     const cloudinaryResult = await uploadImg(req.file.path);
+    const publicId = await cloudinaryResult.public_id;
     const profilePic = await cloudinaryResult.secure_url;
 
     const { username, email, password, firstname, lastname } = req.body;
@@ -61,7 +62,8 @@ const signup = async (req, res, next) => {
               lastname,
               email,
               hash,
-              profilePic
+              profilePic,
+              publicId
             )
               .then(newUser => {
                 console.log(newUser);

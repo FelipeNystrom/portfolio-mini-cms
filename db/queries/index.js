@@ -20,10 +20,28 @@ const findUserById = id => {
   return db.oneOrNone(sql, [id]);
 };
 
-const createUser = (username, firstname, lastname, email, hash, profilePic) => {
+const createUser = (
+  username,
+  firstname,
+  lastname,
+  email,
+  hash,
+  profilePic,
+  publicId,
+  aboutMe
+) => {
   const sql =
-    'INSERT INTO users (username, email , password, firstname, lastname, profilePic) VALUES ($1, $2, $3, $4, $5, $6) RETURNING username';
-  return db.one(sql, [username, email, hash, firstname, lastname, profilePic]);
+    'INSERT INTO users (username, email , password, firstname, lastname, profile_pic, about_me, public_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING username';
+  return db.one(sql, [
+    username,
+    email,
+    hash,
+    firstname,
+    lastname,
+    profilePic,
+    aboutMe,
+    publicId
+  ]);
 };
 
 const getAllProjectsFromUser = id => {
