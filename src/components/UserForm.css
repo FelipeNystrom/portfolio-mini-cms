@@ -26,10 +26,14 @@
   width: 100%;
 }
 
-.container form input {
+.container form input,
+.container form textarea {
   width: 100%;
-  margin: 4% 0;
-  padding: 2%;
+  margin: 6% 0;
+  padding: 5%;
+  border: 0.05rem solid hsla(0, 0%, 70%, 0.8);
+  box-shadow: 0.05rem 0.05rem 0.2rem hsla(0, 0%, 50%, 0.6);
+  border-radius: 0.025rem;
 }
 
 .container form input[type='submit'],
@@ -40,6 +44,7 @@
   border: 0.1rem solid hsla(0, 0%, 70%, 0.8);
   box-shadow: 0.1rem 0.1rem 0.1rem hsla(0, 0%, 50%, 0.8);
   transition: all 400ms ease-in-out;
+  border-radius: 0rem;
 }
 
 .container form input[type='submit']:hover,
@@ -55,7 +60,6 @@
 .container form textarea {
   width: 100%;
   margin: 4% 0;
-  padding: 2%;
   height: 15rem;
 }
 
