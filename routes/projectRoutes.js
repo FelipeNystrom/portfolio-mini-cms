@@ -9,8 +9,7 @@ const {
   insertNewProject,
   getSpecificProjectFromUser,
   deletePost,
-  updateProject,
-  findUserById
+  updateProject
 } = require('../db/queries');
 
 module.exports = router;
@@ -25,21 +24,6 @@ router.post('/', checkToken, async (req, res) => {
     });
   });
 });
-
-router.get('/profile', checkToken, async (req, res) => {
-  const user = findUserById(req.user.id);
-  res.send({ user: user });
-});
-
-router.post(
-  '/profile',
-  checkToken,
-  handleFormData.single('image'),
-  async (req, res) => {
-    const { id } = req.user;
-    tempStorageTruncate();
-  }
-);
 
 router.get('/projects', checkToken, async (req, res) => {
   getAllProjectsFromUser(req.user.id).then(result => {
