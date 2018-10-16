@@ -35,7 +35,14 @@ const signup = async (req, res, next) => {
     const publicId = await cloudinaryResult.public_id;
     const profilePic = await cloudinaryResult.secure_url;
 
-    const { username, email, password, firstname, lastname } = req.body;
+    const {
+      username,
+      email,
+      password,
+      firstname,
+      lastname,
+      aboutMe
+    } = req.body;
     const saltRounds = 12;
     if (
       !username ||
@@ -63,6 +70,7 @@ const signup = async (req, res, next) => {
               email,
               hash,
               profilePic,
+              aboutMe,
               publicId
             )
               .then(newUser => {
