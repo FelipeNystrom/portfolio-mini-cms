@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
 const { uploadImg } = require('../imageStorage');
+const { tempStorageTruncate } = require('../_helpers');
 const {
   createUser,
   verifyUser,
@@ -96,6 +97,7 @@ const signup = async (req, res, next) => {
       }
     });
   }
+  tempStorageTruncate();
 };
 
 module.exports = { signup, signin };
