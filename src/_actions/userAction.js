@@ -32,8 +32,10 @@ class Auth {
       return user
         .Register(formData)
         .then(newUser => {
-          localStorage.setItem('token', newUser.token);
-          dispatch(loggedInSuccess({ name: newUser.user }));
+          if (newUser) {
+            localStorage.setItem('token', newUser.token);
+            dispatch(loggedInSuccess({ user: newUser.user }));
+          }
         })
         .catch(err => dispatch(registerFailure(err)));
     };

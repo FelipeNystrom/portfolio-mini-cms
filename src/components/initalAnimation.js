@@ -15,9 +15,7 @@ class Hello extends Component {
   componentDidMount() {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
-    console.log(pp);
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      console.log((!pp || pp === undefined) && (!fn || fn === undefined));
       const url = `http://localhost:7000/`;
       fetch(url)
         .then(res => {

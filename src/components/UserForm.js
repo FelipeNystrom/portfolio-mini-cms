@@ -129,40 +129,39 @@ class Form extends Component {
     return (
       <Fragment>
         <Fragment>
-          <div className={styles.wrapper}>
-            <div className={styles.container}>
-              <h1>{formName}</h1>
-              {formErrors && (
-                <div className={styles.errorMsg}>{formErrorMsg}</div>
-              )}
-              <form onSubmit={this.handleSubmit}>
-                {(login || register) &&
-                  !registerNextPage && (
-                    <Fragment>
-                      <input
-                        type="text"
-                        name="usernameInput"
-                        onChange={this.handleChange}
-                        value={usernameInput}
-                        placeholder="Username"
-                        required
-                      />
-                      <input
-                        type="password"
-                        name="passwordInput"
-                        onChange={this.handleChange}
-                        value={passwordInput}
-                        placeholder="Password"
-                        required
-                      />
-                    </Fragment>
-                  )}
-                {register &&
-                  !registerNextPage && (
-                    <Fragment>
-                      {loading ? (
-                        <div>Setting up your portfolio</div>
-                      ) : (
+          {!loading ? (
+            <div className={styles.wrapper}>
+              <div className={styles.container}>
+                <h1>{formName}</h1>
+                {formErrors && (
+                  <div className={styles.errorMsg}>{formErrorMsg}</div>
+                )}
+                <form onSubmit={this.handleSubmit}>
+                  <Fragment>
+                    {(login || register) &&
+                      !registerNextPage && (
+                        <Fragment>
+                          <input
+                            type="text"
+                            name="usernameInput"
+                            onChange={this.handleChange}
+                            value={usernameInput}
+                            placeholder="Username"
+                            required
+                          />
+                          <input
+                            type="password"
+                            name="passwordInput"
+                            onChange={this.handleChange}
+                            value={passwordInput}
+                            placeholder="Password"
+                            required
+                          />
+                        </Fragment>
+                      )}
+
+                    {register &&
+                      !registerNextPage && (
                         <Fragment>
                           <input
                             type="email"
@@ -190,54 +189,60 @@ class Form extends Component {
                           />
                         </Fragment>
                       )}
-                    </Fragment>
-                  )}
 
-                {register &&
-                  registerNextPage && (
-                    <Fragment>
-                      <textarea
-                        name="aboutMe"
-                        onChange={this.handleChange}
-                        value={aboutMe}
-                        placeholder="About Me"
-                      />
+                    {register &&
+                      registerNextPage && (
+                        <Fragment>
+                          <textarea
+                            name="aboutMe"
+                            onChange={this.handleChange}
+                            value={aboutMe}
+                            placeholder="About Me"
+                          />
 
-                      <ReactDropzone
-                        className={styles.dropzone}
-                        accept="image/jpeg, image/png"
-                        onDrop={this.onPreviewDrop}
-                        multiple={false}
-                      >
-                        <div className={styles.dropzoneInner}>
-                          <h6>Drop Image Here</h6>
-                        </div>
-                      </ReactDropzone>
-                      {files.length > 0 && (
-                        <div className={styles.preview}>
-                          <h6>Preview</h6>
-                          {files.map((file, i) => (
-                            <img
-                              alt="Preview"
-                              key={i}
-                              src={file.preview}
-                              className={styles.previewStyle}
-                            />
-                          ))}
-                        </div>
+                          <ReactDropzone
+                            className={styles.dropzone}
+                            accept="image/jpeg, image/png"
+                            onDrop={this.onPreviewDrop}
+                            multiple={false}
+                          >
+                            <div className={styles.dropzoneInner}>
+                              <h6>Drop Image Here</h6>
+                            </div>
+                          </ReactDropzone>
+                          {files.length > 0 && (
+                            <div className={styles.preview}>
+                              <h6>Preview</h6>
+                              {files.map((file, i) => (
+                                <img
+                                  alt="Preview"
+                                  key={i}
+                                  src={file.preview}
+                                  className={styles.previewStyle}
+                                />
+                              ))}
+                            </div>
+                          )}
+                        </Fragment>
                       )}
-                    </Fragment>
-                  )}
-                {setupPortfolio && <Redirect to="/" />}
 
-                {register && !registerNextPage ? (
-                  <input type="button" value="Next" onClick={this.nextPage} />
-                ) : (
-                  <input type="submit" value={formName} />
-                )}
-              </form>
+                    {(register || login) && !registerNextPage && !loading ? (
+                      <input
+                        type="button"
+                        value="Next"
+                        onClick={this.nextPage}
+                      />
+                    ) : (
+                      <input type="submit" value={formName} />
+                    )}
+                  </Fragment>
+                </form>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div>Setting up your portfolio</div>
+          )}
+          {setupPortfolio && <Redirect to="/" />}
           {redirect && <Redirect to="/admin" />}
         </Fragment>
         {unAuth && <Redirect to="/401" />}

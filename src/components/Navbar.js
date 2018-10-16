@@ -37,7 +37,7 @@ class Navbar extends Component {
     return (
       <nav className={styles.wrapper}>
         <ul className={styles.links}>
-          {form && (
+          {(form || (admin && loggedIn)) && (
             <li>
               <Link to="/projects">
                 <NavbarLink>Home</NavbarLink>
@@ -83,6 +83,9 @@ class Navbar extends Component {
                   </li>
                   <li className={styles.link}>
                     <Link to={`${match.url}/show-projects`}>Show projects</Link>
+                  </li>
+                  <li className={styles.link}>
+                    <Link to="/projects">Home</Link>
                   </li>
                 </ul>
 
