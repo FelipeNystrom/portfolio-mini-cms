@@ -78,7 +78,8 @@ class Form extends Component {
       emailInput,
       firsNameInput,
       lastNameInput,
-      files
+      files,
+      aboutMe
     } = this.state;
     e.preventDefault();
     if (this._isMounted) {
@@ -96,6 +97,7 @@ class Form extends Component {
         formData.append('image', files[0]);
         formData.append('firstname', firsNameInput);
         formData.append('lastname', lastNameInput);
+        formData.append('aboutMe', aboutMe);
         this.props.dispatch(auth.Register(formData));
         if (this._isMounted) {
           this.setState({ setupPortfolio: true });

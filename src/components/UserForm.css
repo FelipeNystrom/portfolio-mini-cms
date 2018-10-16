@@ -105,5 +105,5 @@
 .previewStyle {
   display: 'inline';
   width: 10rem;
-  height: 10rem;
+  max-height: 10rem;
 }
