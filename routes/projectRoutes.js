@@ -70,7 +70,7 @@ router.get('/project/update/:id', checkToken, async (req, res) => {
     .then(project => {
       if (project.length === 0) {
         res.status(204);
-        res.json({
+        res.send({
           message: "Sorry! We couldn't find the project you were looking for "
         });
       }

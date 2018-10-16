@@ -44,6 +44,32 @@ const createUser = (
   ]);
 };
 
+const updateUser = (
+  id,
+  username,
+  email,
+  hash,
+  firstname,
+  lastname,
+  profilePic,
+  aboutMe,
+  publicId
+) => {
+  const sql =
+    'UPDATE users SET username = $2, email = $3, password = $4, firstname = $5, lastname = $6, profile_pic = $7 , about_me = $8, public_id = $9 WHERE id = $1';
+  return db.one(sql, [
+    id,
+    username,
+    email,
+    hash,
+    firstname,
+    lastname,
+    profilePic,
+    aboutMe,
+    publicId
+  ]);
+};
+
 const getAllProjectsFromUser = id => {
   const sql = 'SELECT * FROM projects WHERE author = $1';
   return db.manyOrNone(sql, [id]);
@@ -87,5 +113,6 @@ module.exports = {
   deletePost,
   getCountOfProjects,
   updateProject,
-  userExist
+  userExist,
+  updateUser
 };
