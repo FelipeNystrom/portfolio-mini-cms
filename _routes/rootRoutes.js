@@ -2,9 +2,9 @@ const Router = require('express-promise-router');
 const router = new Router();
 const passport = require('passport');
 const requireSignIn = passport.authenticate('local', { session: false });
-const authenticate = require('../passport/authentication');
-const { getAllProjects, userExist } = require('../db/queries');
-const { handleFormData } = require('../imageStorage');
+const authenticate = require('../_passport/authentication');
+const { getAllProjects, userExist } = require('../_db/queries');
+const { handleFormData } = require('../_imageStorage');
 
 module.exports = router;
 

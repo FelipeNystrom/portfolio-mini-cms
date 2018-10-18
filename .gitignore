@@ -3,3 +3,4 @@ node_modules/
 _tmp-media-storage/
 .env
 .gitignore
+_sql

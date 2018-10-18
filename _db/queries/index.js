@@ -1,4 +1,4 @@
-const db = require('../../db');
+const db = require('../../_db');
 
 const getAllProjects = () => {
   const sql = 'SELECT * FROM projects';

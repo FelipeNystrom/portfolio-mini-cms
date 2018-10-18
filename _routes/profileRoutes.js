@@ -2,9 +2,9 @@ const Router = require('express-promise-router');
 const router = new Router();
 const passport = require('passport');
 const checkToken = passport.authenticate('jwt', { session: false });
-const { handleFormData, deleteImg, uploadImg } = require('../imageStorage');
+const { handleFormData, deleteImg, uploadImg } = require('../_imageStorage');
 const { tempStorageTruncate } = require('../_helpers');
-const { findUserById, updateUser } = require('../db/queries');
+const { findUserById, updateUser } = require('../_db/queries');
 
 module.exports = router;
 

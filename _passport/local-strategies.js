@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const { verifyUser, findUserById } = require('../db/queries');
+const { verifyUser, findUserById } = require('../_db/queries');
 const bcrypt = require('bcrypt');
 const passportJWT = require('passport-jwt');
 const JwtStrategy = passportJWT.Strategy;

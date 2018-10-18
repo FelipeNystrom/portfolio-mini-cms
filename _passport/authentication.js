@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
-const { uploadImg } = require('../imageStorage');
+const { uploadImg } = require('../_imageStorage');
 const { tempStorageTruncate } = require('../_helpers');
 const {
   createUser,
   verifyUser,
   getAllProjectsFromUser,
   userExist
-} = require('../db/queries');
+} = require('../_db/queries');
 
 const tokenForUser = user => {
   const timestamp = new Date().getTime();

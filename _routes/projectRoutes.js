@@ -2,7 +2,7 @@ const Router = require('express-promise-router');
 const router = new Router();
 const passport = require('passport');
 const checkToken = passport.authenticate('jwt', { session: false });
-const { handleFormData, deleteImg, uploadImg } = require('../imageStorage');
+const { handleFormData, deleteImg, uploadImg } = require('../_imageStorage');
 const { tempStorageTruncate } = require('../_helpers');
 const {
   getAllProjectsFromUser,
@@ -10,7 +10,7 @@ const {
   getSpecificProjectFromUser,
   deletePost,
   updateProject
-} = require('../db/queries');
+} = require('../_db/queries');
 
 module.exports = router;
 

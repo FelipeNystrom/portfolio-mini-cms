@@ -1,6 +1,6 @@
 const express = require('express');
-const db = require('./db');
-const mountRoutes = require('./routes');
+const db = require('./_db');
+const mountRoutes = require('./_routes');
 const path = require('path');
 const server = express();
 const passport = require('passport');
@@ -12,11 +12,10 @@ server.use(express.urlencoded({ extended: false }));
 server.use(passport.initialize());
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(cors());
-require('./passport')(passport);
+require('./_passport')(passport);
 require('dotenv').config();
 // use mounted routes
 mountRoutes(server);
-
 server.listen(_port, () => {
   console.log(`server running at port: ${_port}`);
 });
