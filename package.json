@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "dev-start": "NODE_ENV=development nodemon -r dotenv/config server.js && npm run start"
+    "dev-start": "NODE_ENV=development nodemon -r dotenv/config server.js && cd client && npm run start"
   },
   "author": "Felipe Nyström",
   "license": "MIT",
