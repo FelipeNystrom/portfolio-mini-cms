@@ -1,6 +1,6 @@
 class User {
   Check(token) {
-    const url = 'http://localhost:7000/admin';
+    const url = '/admin';
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -15,7 +15,7 @@ class User {
   }
 
   Login(username, password) {
-    const url = `http://localhost:7000/login`;
+    const url = `/login`;
     return fetch(url, {
       method: 'POST',
 
@@ -37,7 +37,7 @@ class User {
   }
 
   Register = formData => {
-    const url = `http://localhost:7000/register`;
+    const url = `/register`;
     return fetch(url, {
       method: 'POST',
       body: formData

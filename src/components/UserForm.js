@@ -30,7 +30,7 @@ class Form extends Component {
     this._isMounted = true;
     const { formName } = this.props;
     if (formName === 'register') {
-      fetch('http://localhost:7000/').then(res => {
+      fetch('/').then(res => {
         if (res.status === 401) {
           this.setState({ unAuth: true });
         } else {

@@ -16,8 +16,7 @@ class Hello extends Component {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      const url = `http://localhost:7000/`;
-      fetch(url)
+      fetch(`/`)
         .then(res => {
           if (res.status === 204) {
             this.setState({ redirect: true });
