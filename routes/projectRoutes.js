@@ -57,7 +57,8 @@ router.post(
         } else throw error;
       })
       .catch(err => {
-        res.error('Error: ' + err);
+        console.log(err);
+        res.send('Error: ' + err);
       });
     tempStorageTruncate();
   }
@@ -122,6 +123,7 @@ router.put(
       publicId,
       id
     );
+
     console.log('updated post ', projectUpdate);
     res.status(200);
     res.send({

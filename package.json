@@ -22,7 +22,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "pg-promise": "^8.4.6"
+    "pg-promise": "^8.4.6",
+    "ws": "^6.1.0"
   },
   "devDependencies": {
     "cors": "^2.8.4"
