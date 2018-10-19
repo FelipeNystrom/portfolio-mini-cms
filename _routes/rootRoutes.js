@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
   if (isThereAUser === null) {
     res.sendStatus(204);
   } else {
+    console.log(isThereAUser);
     res.send(isThereAUser);
   }
 });
