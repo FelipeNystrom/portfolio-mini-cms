@@ -1,8 +1,7 @@
 const pgp = require('pg-promise')();
-const dbConfig = require('./credentials');
+// const dbConfig = require('./credentials');
 
-const db = pgp(dbConfig);
-
+const db = pgp(process.env.DATABASE_URL);
 db.connect({ direct: true })
   .then(sco => {
     sco.client.on('notification', data => {
