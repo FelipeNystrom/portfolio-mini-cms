@@ -48,23 +48,6 @@ class Navbar extends Component {
             !admin && (
               <li>
                 <NavbarLink>About me</NavbarLink>
-
-                {!loggedIn ? (
-                  <Link to="/login">
-                    <FontAwesomeIcon
-                      className={styles.loginLogout}
-                      icon="sign-in-alt"
-                    />
-                  </Link>
-                ) : (
-                  <Link to="/logout" onClick={this.logout}>
-                    <FontAwesomeIcon
-                      onClick={this.logout}
-                      className={styles.loginLogout}
-                      icon="sign-out-alt"
-                    />
-                  </Link>
-                )}
               </li>
             )}
 
@@ -88,16 +71,29 @@ class Navbar extends Component {
                     <Link to="/projects">Home</Link>
                   </li>
                 </ul>
-
-                <Link to="/logout" onClick={this.logout}>
-                  <FontAwesomeIcon
-                    className={styles.loginLogout}
-                    icon="sign-out-alt"
-                  />
-                </Link>
               </Fragment>
             )}
         </ul>
+        {!loggedIn ? (
+          <Link to="/login">
+            <div className={styles.loginLogoutWrapper}>
+              <FontAwesomeIcon
+                className={styles.loginLogout}
+                icon="sign-in-alt"
+              />
+            </div>
+          </Link>
+        ) : (
+          <Link to="/logout" onClick={this.logout}>
+            <div className={styles.loginLogoutWrapper}>
+              <FontAwesomeIcon
+                onClick={this.logout}
+                className={styles.loginLogout}
+                icon="sign-out-alt"
+              />
+            </div>
+          </Link>
+        )}
       </nav>
     );
   }

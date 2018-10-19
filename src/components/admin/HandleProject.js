@@ -3,6 +3,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactDropzone from 'react-dropzone';
 import styles from './HandleProject.css';
+import baseUrl from '../../_helpers/api';
 import {
   updateProject,
   newProject,
@@ -71,7 +72,7 @@ class HandleProject extends Component {
   };
 
   getProject = id => {
-    const url = `/admin/project/update/${id}`;
+    const url = `${baseUrl}/admin/project/update/${id}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -109,7 +110,7 @@ class HandleProject extends Component {
 
     const { dispatch } = this.props;
 
-    let url = '/admin/project/new';
+    let url = `${baseUrl}/admin/project/new`;
     let methodType = 'POST';
     const formData = new FormData();
     formData.append('title', titleInput);
@@ -122,7 +123,7 @@ class HandleProject extends Component {
       const { id } = match.params;
 
       methodType = 'PUT';
-      url = `/admin/project/update/${id}`;
+      url = `${baseUrl}/admin/project/update/${id}`;
 
       formData.append('oldImgPublicId', oldImgPublicId);
       if (files[0].preview.substr(59, 54) === oldImgPublicId) {
@@ -137,7 +138,7 @@ class HandleProject extends Component {
     if (destroy) {
       const { match } = this.props;
       const { id } = match.params;
-      url = `/admin/project/delete/${id}`;
+      url = `${baseUrl}/admin/project/delete/${id}`;
       methodType = 'DELETE';
       const deleteImg = new FormData();
       deleteImg.append('publicId', oldImgPublicId);

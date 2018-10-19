@@ -8,8 +8,6 @@ class ShowProject extends Component {
     text: 'description'
   };
 
-  componentDidMount() {}
-
   componentDidUpdate(prevProps) {
     const { match, projects } = this.props;
     const { id } = match.params;
@@ -36,7 +34,9 @@ class ShowProject extends Component {
           <h4>{title}</h4>
         </div>
         <div className={styles.role}>
-          <h6>{role}</h6>
+          <p>
+            Role: <span>{role}</span>
+          </p>
         </div>
         <div className={styles.description}>
           <p>{text}</p>

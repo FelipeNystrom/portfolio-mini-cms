@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import Greetings from './Greetings';
 import styles from './initalAnimation.css';
+import baseUrl from '../_helpers/api';
 
 class Hello extends Component {
   state = {
@@ -16,8 +17,9 @@ class Hello extends Component {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      fetch(`/`)
+      fetch(`${baseUrl}/`)
         .then(res => {
+          console.log(res);
           if (res.status === 204) {
             this.setState({ redirect: true });
           } else {

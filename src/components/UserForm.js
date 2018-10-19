@@ -226,7 +226,7 @@ class Form extends Component {
                         </Fragment>
                       )}
 
-                    {(register || login) && !registerNextPage && !loading ? (
+                    {register && !registerNextPage && !loading ? (
                       <input
                         type="button"
                         value="Next"
@@ -242,9 +242,9 @@ class Form extends Component {
           ) : (
             <div>Setting up your portfolio</div>
           )}
-          {setupPortfolio && <Redirect to="/" />}
-          {redirect && <Redirect to="/admin" />}
         </Fragment>
+        {setupPortfolio && <Redirect to="/" />}
+        {redirect && <Redirect to="/admin" />}
         {unAuth && <Redirect to="/401" />}
       </Fragment>
     );

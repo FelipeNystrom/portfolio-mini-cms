@@ -1,8 +1,10 @@
 import { sendToServer } from '../_helpers/projects';
+import baseUrl from '../_helpers/api';
+
+const url = `${baseUrl}/getAll`;
 
 class Project {
   GetAll() {
-    const url = 'http://localhost:7000/getAll';
     return fetch(url)
       .then(res => res.json())
       .catch(err => {
