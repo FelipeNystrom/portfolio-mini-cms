@@ -1,0 +1,10 @@
+.link {
+  width: auto;
+  text-align: center;
+  border-bottom: 0.1rem solid hsla(0, 0%, 10%, 0);
+  transition: all 400ms ease-in-out;
+}
+
+.link:hover {
+  border-bottom: 0.1rem solid hsla(0, 0%, 10%, 0.8);
+}
