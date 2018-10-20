@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const config = require('../_vars');
 const { uploadImg } = require('../_imageStorage');
