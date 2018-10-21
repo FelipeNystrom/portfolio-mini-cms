@@ -5,7 +5,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  baseUrl = process.env.IP;
+  console.log(process.env)
+
+  baseUrl = 'https://portfolio--cms.herokuapp.com/'
 }
 
 export default baseUrl;
