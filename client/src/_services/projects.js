@@ -9,7 +9,7 @@ if (NODE_ENV === 'development') {
 }
 
 if (NODE_ENV === 'production') {
-  url = `/getAll`;
+  url = `getAll`;
 }
 
 class Project {

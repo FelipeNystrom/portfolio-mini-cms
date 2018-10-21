@@ -1,6 +1,6 @@
 class User {
   Check(token) {
-    const url = '/admin';
+    const url = 'admin';
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -15,7 +15,7 @@ class User {
   }
 
   Login(username, password) {
-    const url = `/login`;
+    const url = `login`;
     return fetch(url, {
       method: 'POST',
 

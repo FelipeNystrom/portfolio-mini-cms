@@ -4,17 +4,6 @@ import Greetings from './Greetings';
 import styles from './initalAnimation.css';
 import baseUrl from '../_helpers/api';
 
-let url;
-const { NODE_ENV } = process.env;
-
-if (NODE_ENV === 'development') {
-  url = `${baseUrl}/`;
-}
-
-if (NODE_ENV === 'production') {
-  url = `/`;
-}
-
 class Hello extends Component {
   state = {
     fadeIn: false,
@@ -28,7 +17,7 @@ class Hello extends Component {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      fetch(url)
+      fetch()
         .then(res => {
           console.log(res);
           if (res.status === 204) {
