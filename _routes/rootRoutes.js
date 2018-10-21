@@ -8,7 +8,7 @@ const { handleFormData } = require('../_imageStorage');
 
 module.exports = router;
 
-router.get('/', async (req, res) => {
+router.get('/init', async (req, res) => {
   const isThereAUser = await userExist();
   if (isThereAUser === null) {
     res.sendStatus(204);

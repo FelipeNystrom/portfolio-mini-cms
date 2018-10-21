@@ -17,7 +17,7 @@ class Hello extends Component {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      fetch()
+      fetch('init')
         .then(res => {
           console.log(res);
           if (res.status === 204) {
