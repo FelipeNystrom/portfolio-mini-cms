@@ -10,6 +10,7 @@ module.exports = router;
 
 router.get('/init', async (req, res) => {
   const isThereAUser = await userExist();
+  console.log(isThereAUser);
   if (isThereAUser === null) {
     res.sendStatus(204);
   } else {
