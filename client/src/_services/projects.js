@@ -1,7 +1,16 @@
 import { sendToServer } from '../_helpers/projects';
 import baseUrl from '../_helpers/api';
 
-const url = `${baseUrl}/getAll`;
+let url;
+const { NODE_ENV } = process.env;
+
+if (NODE_ENV === 'development') {
+  url = `${baseUrl}/getAll`;
+}
+
+if (NODE_ENV === 'production') {
+  url = `/getAll`;
+}
 
 class Project {
   GetAll() {
