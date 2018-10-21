@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import Greetings from './Greetings';
 import styles from './initalAnimation.css';
-import baseUrl from '../_helpers/api';
 
 class Hello extends Component {
   state = {
