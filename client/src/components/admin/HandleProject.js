@@ -72,7 +72,7 @@ class HandleProject extends Component {
   };
 
   getProject = id => {
-    const url = `${baseUrl}/admin/project/update/${id}`;
+    const url = `api/admin/project/update/${id}`;
     fetch(url, {
       method: 'GET',
       headers: {

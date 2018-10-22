@@ -1,6 +1,6 @@
 class User {
   Check(token) {
-    const url = 'admin';
+    const url = 'api/admin';
     return fetch(url, {
       method: 'POST',
       headers: {
@@ -15,7 +15,7 @@ class User {
   }
 
   Login(username, password) {
-    const url = `login`;
+    const url = `api/login`;
     return fetch(url, {
       method: 'POST',
 
@@ -37,7 +37,7 @@ class User {
   }
 
   Register = formData => {
-    const url = `/register`;
+    const url = `api/register`;
     return fetch(url, {
       method: 'POST',
       body: formData
