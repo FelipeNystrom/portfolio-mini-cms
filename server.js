@@ -12,7 +12,6 @@ server.use(express.urlencoded({ extended: false }));
 server.use(passport.initialize());
 server.use(cors());
 require('./_passport')(passport);
-require('dotenv').config();
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(path.join(__dirname, 'client/build')));
@@ -20,8 +19,6 @@ if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
-} else {
-  server.use(express.static(path.join(__dirname, 'public')));
 }
 
 // use mounted routes
