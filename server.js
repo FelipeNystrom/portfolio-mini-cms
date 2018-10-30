@@ -13,6 +13,9 @@ server.use(passport.initialize());
 server.use(cors());
 require('./_passport')(passport);
 
+// use mounted routes
+mountRoutes(server);
+
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(path.join(__dirname, 'client/build')));
   // Anything that doesn't match the above, send back index.html
@@ -20,9 +23,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 }
-
-// use mounted routes
-mountRoutes(server);
 
 server.listen(_port, () => {
   console.log(`server running at port: ${_port}`);
