@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production node index.js",
+    "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "dev-start": "NODE_ENV=development nodemon -r dotenv/config server.js",
     "client-dev-start": "cd client && npm run start"
