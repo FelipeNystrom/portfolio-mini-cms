@@ -22,15 +22,17 @@ if (process.env.NODE_ENV === 'production') {
   server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
+} else {
+  server.use(express.static(path.join(__dirname, 'public')));
 }
-
-server.listen(_port, () => {
-  console.log(`server running at port: ${_port}`);
-});
 
 server.on('close', () => {
   console.log('server connection closed');
   db.pool.end(() => {
     console.log('database connection closed');
   });
+});
+
+server.listen(_port, () => {
+  console.log(`server running at port: ${_port}`);
 });
