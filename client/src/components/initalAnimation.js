@@ -12,30 +12,26 @@ class Hello extends Component {
     redirect: false,
     loading: true
   };
-  componentDidMount() {
+  async componentDidMount() {
     const pp = localStorage.getItem('pp');
     const fn = localStorage.getItem('fn');
     if ((!pp || pp !== undefined) && (!fn || fn !== undefined)) {
-      fetch('api/init')
-        .then(res => {
-          console.log(res);
+      const res = await fetch('api/init');
+
           if (res.status === 204) {
             this.setState({ redirect: true });
           } else {
-            return res.json();
+            const owner = await res.json();
+            localStorage.setItem('pp', owner.profilepic);
+            localStorage.setItem('fn', owner.concat);
+            this.setState({
+              loading: false,
+              fullname: owner.concat,
+              profilePic: owner.profilepic,
+              fadeIn: true
+            });
           }
-        })
-        .then(owner => {
-          localStorage.setItem('pp', owner.profilepic);
-          localStorage.setItem('fn', owner.concat);
-          this.setState({
-            loading: false,
-            fullname: owner.concat,
-            profilePic: owner.profilepic,
-            fadeIn: true
-          });
-        })
-        .catch(err => console.error(err));
+        
     } else {
       this.setState({
         loading: false,
